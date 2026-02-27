@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SourceCrawler</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1 class="logo">Source<span class="accent">Crawler</span></h1>
+            <p class="tagline">Public source code intelligence</p>
+        </header>
+
+        <main class="main">
+            <section class="search-panel">
+                <div class="search-input-group">
+                    <input type="text" id="query" placeholder="Search string or /regex/ ..."
+                           class="search-input" autofocus>
+                    <select id="mode" class="mode-select">
+                        <option value="string">String</option>
+                        <option value="regex">Regex</option>
+                    </select>
+                    <button id="search-btn" class="btn-primary">Scan</button>
+                    <button id="cancel-btn" class="btn-secondary" disabled>Stop</button>
+                </div>
+                <div class="search-options">
+                    <label class="toggle-label" title="Opens a visible browser window for Playwright-based scanners">
+                        <input type="checkbox" id="debug-mode">
+                        <span class="toggle-text">Debug Mode</span>
+                    </label>
+                    <button id="settings-btn" class="btn-icon" title="Configure scanners">&#9881; Settings</button>
+                    <button id="clear-btn" class="btn-icon btn-icon-danger" title="Clear all data">&#10005; Clear All</button>
+                </div>
+            </section>
+
+            <!-- Settings Panel -->
+            <section class="settings-panel hidden" id="settings-panel">
+                <div class="settings-header">
+                    <h3>Scanner Settings</h3>
+                    <button id="settings-close" class="btn-icon">&times;</button>
+                </div>
+                <div class="settings-body" id="settings-body">
+                    <p class="text-muted">Loading...</p>
+                </div>
+            </section>
+
+            <section class="status-bar" id="status-bar"></section>
+
+            <section class="filter-bar">
+                <input type="text" id="filter" placeholder="Filter results..."
+                       class="filter-input">
+                <span class="result-count" id="result-count">0 results</span>
+                <div class="export-btns">
+                    <button class="btn-small" id="export-json" disabled>JSON</button>
+                    <button class="btn-small" id="export-csv" disabled>CSV</button>
+                </div>
+            </section>
+
+            <section class="results-container">
+                <table class="results-table" id="results-table">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-col="provider_name">Source <span class="sort-arrow"></span></th>
+                            <th class="sortable" data-col="target_url">URL <span class="sort-arrow"></span></th>
+                            <th class="sortable" data-col="code_snippet">Snippet <span class="sort-arrow"></span></th>
+                            <th class="sortable" data-col="timestamp">Time <span class="sort-arrow"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body"></tbody>
+                </table>
+                <div class="empty-state" id="empty-state">
+                    <p>Enter a search query to scan public source code across the web.</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Detail Modal -->
+    <div class="modal-overlay hidden" id="detail-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Result Details</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

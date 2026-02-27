@@ -1,0 +1,33 @@
+# SourceCrawler Configuration
+# Fill in API keys for the services you want to use.
+# Scanners with missing/empty keys are automatically skipped.
+
+github:
+  token: ""                # GitHub Personal Access Token (PAT)
+
+sourcegraph:
+  token: ""                # Optional - public search works without a token
+  base_url: "https://sourcegraph.com"
+
+urlscan:
+  api_key: ""              # urlscan.io API key
+
+serper:
+  api_key: ""              # Serper.dev API key
+
+publicwww:
+  email: ""                # PublicWWW account email (free tier: top 3M unredacted)
+  password: ""             # PublicWWW account password
+
+# Server settings
+server:
+  host: "127.0.0.1"
+  port: 8080
+
+# Rate limits (requests per minute)
+rate_limits:
+  github: 10               # GitHub code search: 10 req/min
+  sourcegraph: 30           # Conservative default
+  urlscan: 60               # Depends on plan
+  serper: 40                # ~2500 credits total, pace them
+  publicwww: 5              # Headless scraping, be gentle
